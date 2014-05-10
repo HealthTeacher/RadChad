@@ -1,4 +1,4 @@
-# Hubot
+# RadChad
 
 This is the GoNoodle version of GitHub's Campfire bot, hubot.
 
