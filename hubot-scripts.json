@@ -1,1 +1,10 @@
-["redis-brain.coffee", "shipit.coffee"]
+[
+  "pg-brain.coffee",
+  "darksky.coffee",
+  "dealwithit.coffee",
+  "dribbble.coffee",
+  "giphy.coffee",
+  "haters.coffee",
+  "newrelic.coffee",
+  "pivotal.coffee"
+]
