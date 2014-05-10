@@ -39,7 +39,7 @@ module.exports = (robot) ->
 
           msg.send lines.join("\n"), "https://rpm.newrelic.com/accounts/#{accountId}/applications/#{appId}"
 
-  robot.respond /newrelic( me)/i, (msg) ->
+  robot.respond /newrelic( me)?/i, (msg) ->
     accountId = process.env.HUBOT_NEWRELIC_ACCOUNT_ID
     appIds    = process.env.HUBOT_NEWRELIC_APP_ID.split(',')
     apiKey    = process.env.HUBOT_NEWRELIC_API_KEY
