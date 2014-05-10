@@ -1,1 +1,1 @@
-web: bin/hubot -a slack -n RadChad
+web: bin/hubot -a slack -n RadChad -l !
