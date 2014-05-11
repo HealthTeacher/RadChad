@@ -33,7 +33,9 @@ module.exports = (robot) ->
       catch e
         return msg.send "Error parsing pivotal story body: #{e}"
 
-      message =  "#{story.name}\n"
-      message += "#{story.description}\n"
-      message += "#{story.estimate} points | #{story.current_state}"
+      desc = story.description.replace /\n/g, "\n> "
+
+      message =  "> *#{story.name}*\n"
+      message += "> _#{story.estimate} points_ | _#{story.current_state}_"
+      message += "> #{desc}\n"
       msg.send message
