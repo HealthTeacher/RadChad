@@ -36,6 +36,6 @@ module.exports = (robot) ->
       desc = story.description.replace /\n/g, "\n> "
 
       message =  "> *#{story.name}*\n"
-      message += "> _#{story.estimate} points_ | _#{story.current_state}_"
-      message += "> #{desc}\n"
+      message += "> _#{story.estimate} points_ | _#{story.current_state}_\n"
+      message += "> #{desc}"
       msg.send message
