@@ -35,9 +35,9 @@ module.exports = (robot) ->
         (new Parser).parseString body, (err, json)->
           threshold_values = json['threshold-values']['threshold_value'] || []
           lines = threshold_values.map (threshold_value) ->
-            "#{threshold_value['$']['name']}: #{threshold_value['$']['formatted_metric_value']}"
+            "> *#{threshold_value['$']['name']}*: #{threshold_value['$']['formatted_metric_value']}"
 
-          msg.send lines.join("\n"), "https://rpm.newrelic.com/accounts/#{accountId}/applications/#{appId}"
+          msg.send lines.join("\n"), "> https://rpm.newrelic.com/accounts/#{accountId}/applications/#{appId}"
 
   robot.respond /newrelic( me)?/i, (msg) ->
     accountId = process.env.HUBOT_NEWRELIC_ACCOUNT_ID
