@@ -28,7 +28,7 @@ imageMe = (msg, query, animated, cb) ->
       images = images.responseData?.results
       if images?.length > 0
         image  = msg.random images
-        cb "#{image.unescapedUrl}#.png"
+        cb image.unescapedUrl
       else
         cb "I got nothing."
 
