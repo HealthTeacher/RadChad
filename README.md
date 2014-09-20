@@ -6,7 +6,7 @@ This is the GoNoodle version of GitHub's Campfire bot, hubot.
 
 You can test your hubot by running the following.
 
-    % bin/hubot
+    % bin/hubot -n SadChad -l !
 
 You'll see some start up output about where your scripts come from and a
 prompt.
