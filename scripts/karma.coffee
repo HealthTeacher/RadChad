@@ -28,11 +28,16 @@ class Karma
     @cache = {}
 
     @increment_responses = [
-      "is :+1:!", "gained a level!", "is on the rise!", "leveled up!"
+      "leveled up...woopty doo"
+      "leveled up..."
+      "is better than ol' SadChad"
     ]
 
     @decrement_responses = [
-      "took a hit.", "took a dive.", "lost a life.", "lost a level."
+      "took a dive. You get used to it..."
+      "has the spoiled milk now"
+      "lost a level...such is life"
+      "lost a level...welcome to my world"
     ]
 
     @robot.brain.on 'loaded', =>
