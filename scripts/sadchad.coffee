@@ -35,6 +35,13 @@ phrases = [
   "The heat went out in my van again."
   "My condo is being sprayed for bed bugs this weekend. Can I crash at your place?"
   "Sorry, gotta get back to my job as the shift manager at Arby's."
+  "I gave a hobo some change today. He gave it back and said I looked like I needed it more."
+  "I think happiness is about as real as The Little Mermaid"
+  "I'm up to my 2nd chin in alimony"
+  "Spoiled milk is only bad if you let yourself give in to standards."
+  "It was supposed to be my weekend with the kids, but they'd rather stay with Cheryl and their new dad, Kevin"
+  "Now they call Kevin \"Dad\" and me \"Uncle Sad\"."
+  "Sorry I missed your call. My phone was disconnected...again"
 ]
 
 module.exports = (robot) ->
