@@ -42,6 +42,9 @@ phrases = [
   "It was supposed to be my weekend with the kids, but they'd rather stay with Cheryl and their new dad, Kevin"
   "Now they call Kevin \"Dad\" and me \"Uncle Sad\"."
   "Sorry I missed your call. My phone was disconnected...again"
+  "My favorite mixed drink is rum, sour milk, and regret."
+  "I fell asleep in the alley behind O'Charley's...again"
+  "I got banned from Dave & Buster's this weekend."
 ]
 
 module.exports = (robot) ->
