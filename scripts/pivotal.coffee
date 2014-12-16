@@ -26,7 +26,7 @@ module.exports = (robot) ->
     .headers("X-TrackerToken": token)
     .get() (err, res, body) ->
       return msg.send "Pivotal says: #{err}" if err
-      return if res.statusCode == 404 # No story found in this project
+      return msg.send "Story not found" if res.statusCode == 404 # No story found in this project
 
       try
         story = JSON.parse(body)
