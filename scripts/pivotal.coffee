@@ -20,7 +20,7 @@ module.exports = (robot) ->
   robot.hear /(sid-|SID-|pivotaltracker.com\/story\/show)/i, (msg) ->
     token = process.env.HUBOT_PIVOTAL_TOKEN
     projectId = process.env.HUBOT_PIVOTAL_PROJECT_ID
-    storyId = msg.message.text.match(/\d+$/) # look for some numbers in the string
+    storyId = msg.message.text.replace(/\<\>/g, "").match(/\d+$/) # look for some numbers in the string
 
     message = "> *DEBUG INFORMATION*\n"
     message += "> Token: #{token}\n"
