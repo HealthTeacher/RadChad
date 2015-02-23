@@ -9,4 +9,4 @@ util = require 'util'
 module.exports = (robot) ->
 
   robot.respond /whoami/i, (msg) ->
-    msg.send util.inspect(msg.user)
+    msg.send util.inspect(msg.message.user)
