@@ -39,9 +39,22 @@ appData =
     ref: "master"
 
 module.exports = (robot) ->
-  robot.hear /deploy ([\w]+)\s?(.*)?$/i, (msg) ->
+  robot.respond /deploy ([\w]+)\s?(.*)?$/i, (msg) ->
     unless config.token
       msg.send "Please set the HUBOT_ENGINEYARD_TOKEN environment variable."
+      return
+
+    user = msg.message.user
+
+    if [
+      "david",
+      "mwise",
+      "natetallman",
+      "stevencwarren",
+      "travis",
+      "zenworm"
+    ].indexOf(user.id) < 0
+      msg.send "https://s3.amazonaws.com/f.cl.ly/items/2f20050g2n450S2J0Z02/orljyyqzdrqkdsl3viz1.gif"
       return
 
     appConfig = appData[msg.match[1]]
