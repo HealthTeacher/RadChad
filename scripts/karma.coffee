@@ -69,9 +69,11 @@ class Karma
     @decrement_responses[Math.floor(Math.random() * @decrement_responses.length)]
 
   alias: (alias, name) ->
-    @kill(alias) # make sure we get rid of the aliased record
     subject = @findOrInitialize(name)
+    aliasRecord = @findOrInitialize(alias)
     @cache[subject]['aliases'].push(alias) if @cache[subject]['aliases'].indexOf(alias) == -1
+    @cache[subject]['karma'] += @cache[aliasRecord]['karma']
+    @kill(alias) # make sure we get rid of the aliased record
     @robot.brain.data.karma = @cache
 
   unalias: (alias, name) ->
@@ -208,4 +210,3 @@ module.exports = (robot) ->
     if match != "best" && match != "worst" && match != "all"
       subject = karma.findOrInitialize(match)
       msg.send "\"#{subject}\" has #{karma.get(subject)} karma."
-
