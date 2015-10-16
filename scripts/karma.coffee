@@ -11,7 +11,6 @@
 #   <name>++ - give name some karma
 #   <name>-- - take away some of name's karma
 #   hubot karma <name> - check name's karma (if <name> is omitted, show the top 5)
-#   hubot karma empty <name> - empty a name's karma
 #   hubot karma best - show the top 5
 #   hubot karma worst - show the bottom 5
 #   hubot karma all - show all subjects who have received karma
@@ -85,6 +84,10 @@ class Karma
     subject = @findOrInitialize(name)
     @cache[subject]['aliases']
 
+  setAmount: (name, amount) ->
+    subject = @findOrInitialize(name)
+    @cache[subject]['karma'] = amount
+
   get: (name) ->
     record = @findByAlias(name)
     record.karma
@@ -153,6 +156,12 @@ module.exports = (robot) ->
       karma.alias alias, name
     msg.send "Got it! #{alias} has been aliased to #{name}."
 
+  robot.respond /karma override (\S+[^-\s]) (\S+[^-\s])$/i, (msg) ->
+    name = msg.match[1].toLowerCase()
+    amount = parseInt(msg.match[2], 10)
+    karma.setAmount name, amount
+    msg.send "Got it!"
+
   robot.respond /karma unalias (\S+[^-\s]) (\S+[^-\s])$/i, (msg) ->
     alias = msg.match[1].toLowerCase()
     name = msg.match[2].toLowerCase()
@@ -163,11 +172,6 @@ module.exports = (robot) ->
     name = msg.match[1].toLowerCase()
     aliases = karma.aliases(name)
     msg.send "#{name}'s current aliases: #{aliases.join(', ')}."
-
-  robot.respond /karma empty ?(\S+[^-\s])$/i, (msg) ->
-    subject = msg.match[1].toLowerCase()
-    name = karma.kill(subject)
-    msg.send "#{name} has had its karma scattered to the winds."
 
   robot.respond /karma( best)?$/i, (msg) ->
     verbiage = ["The Best"]
