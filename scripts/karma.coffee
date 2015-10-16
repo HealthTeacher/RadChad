@@ -87,6 +87,7 @@ class Karma
   setAmount: (name, amount) ->
     subject = @findOrInitialize(name)
     @cache[subject]['karma'] = amount
+    @robot.brain.data.karma = @cache
 
   get: (name) ->
     record = @findByAlias(name)
