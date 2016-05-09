@@ -14,9 +14,6 @@
 #   /github/webhook
 
 module.exports = (robot) ->
-  robot.respond 'testing', (msg) ->
-    msg.send _.contains(['one', 'two', 'three'], 'four')
-
   robot.router.post '/github/webhook', (req, res) ->
     data   = if req.body.payload? then JSON.parse(req.body.payload) else req.body
     action = data.action
