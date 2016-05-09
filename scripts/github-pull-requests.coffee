@@ -22,9 +22,6 @@ module.exports = (robot) ->
     action = data.action
     label  = data.label
 
-    console.log 'action:', action
-    console.log 'label:', label.name
-
     if action == 'labeled' && label.name == 'needs-review'
       pr      = data.pull_request
       payload = {
@@ -41,6 +38,6 @@ module.exports = (robot) ->
 
       robot.http('https://hooks.slack.com/services/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')
         .header('Content-Type', 'application/json')
-        .post(JSON.stringify(payload)) (err, res, body) -> # noop
+        .post(JSON.stringify(payload))
 
     res.send 'OK'
