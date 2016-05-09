@@ -26,7 +26,7 @@ module.exports = (robot) ->
           {
             color: label.color,
             title: "##{pr.number} #{pr.title}",
-            title_link: pr.html_url
+            title_link: pr.html_url,
             pretext: "*[#{data.repository.full_name}]* Pull request by *#{pr.user.login}* is ready for review!",
             text: pr.body,
             mrkdwn_in: ['pretext', 'text']
