@@ -14,28 +14,53 @@
 #   /github/webhook
 
 module.exports = (robot) ->
-  robot.router.post '/github/webhook', (req, res) ->
-    data   = if req.body.payload? then JSON.parse(req.body.payload) else req.body
-    action = data.action
-    label  = data.label
+  robot.router.post('/github/webhook', (req, res) ->
+    token = process.env.HUBOT_SLACK_BOT_TOKEN
+    userMap = {
+      dcalhoun: '@david'
+      DylanAndrews: '@dylanandrews'
+      jchristianhall: '@christianhall'
+      jerrysims07: '@jerrysims07'
+      lomteslie: '@tom'
+      natetallman: '@natetallman'
+      stevencwarren: '@stevencwarren'
+      traviskroberts: '@travis'
+      zenworm: '@zenworm'
+    }
 
-    if action == 'labeled' && label.name == 'needs-review'
-      pr      = data.pull_request
-      payload = {
-        attachments: [
+    data = if req.body.payload? then JSON.parse(req.body.payload) else req.body
+
+    if data.action == 'review_requested'
+      pr = data.pull_request
+      pr.requested_reviewers.forEach((reviewer) ->
+        username = userMap[reviewer.login]
+        messageAttachment = [
           {
-            color: label.color,
-            title: "##{pr.number} #{pr.title}",
+            color: '#cccccc',
+            fallback: "A pull request from #{pr.user.login} needs your review!"
+            pretext: 'The following pull request needs your review!',
+            author_name: pr.user.login,
+            author_link: pr.user.url,
+            title: pr.title,
             title_link: pr.html_url,
-            pretext: "*[#{data.repository.full_name}]* Pull request by *#{pr.user.login}* is ready for review!",
-            text: pr.body,
-            mrkdwn_in: ['pretext', 'text']
+            text: pr.body
           }
         ]
-      }
 
-      robot.http('https://hooks.slack.com/services/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')
-        .header('Content-Type', 'application/json')
-        .post(JSON.stringify(payload))
-
-    res.send 'OK'
+        res.http('https://slack.com/api/chat.postMessage')
+          .header('Accept', 'application/json')
+          .query({
+            token: token
+            channel: username
+            attachments: JSON.stringify(messageAttachment)
+            as_user: false
+            username: 'github-pr'
+            icon_url: 'https://assets-gnp-ssl.gonoodle.com/slack-assets/github-octocat-icon.png'
+          })
+          .get()((err, res, body) ->
+            res.send('OK')
+          )
+      )
+    else
+      res.send('OK')
+  )
