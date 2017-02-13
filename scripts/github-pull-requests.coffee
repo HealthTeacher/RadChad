@@ -41,7 +41,7 @@ module.exports = (robot) ->
             pretext: 'The following pull request needs your review!',
             author_name: pr.user.login,
             author_link: pr.user.url,
-            title: "[#{pr.repo.full_name}] ##{pr.number} - #{pr.title}",
+            title: "[#{pr.head.repo.full_name}] ##{pr.number} - #{pr.title}",
             title_link: pr.html_url,
             text: pr.body
           }
