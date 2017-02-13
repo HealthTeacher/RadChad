@@ -47,7 +47,7 @@ module.exports = (robot) ->
           }
         ]
 
-        res.http('https://slack.com/api/chat.postMessage')
+        robot.http('https://slack.com/api/chat.postMessage')
           .header('Accept', 'application/json')
           .query({
             token: token
@@ -57,7 +57,7 @@ module.exports = (robot) ->
             username: 'github-pr'
             icon_url: 'https://assets-gnp-ssl.gonoodle.com/slack-assets/github-octocat-icon.png'
           })
-          .get()((err, res, body) ->
+          .get()((err, resp, body) ->
             res.send('OK')
           )
       )
