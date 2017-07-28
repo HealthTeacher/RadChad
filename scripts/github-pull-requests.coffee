@@ -20,12 +20,12 @@ module.exports = (robot) ->
       dcalhoun: '@david'
       DylanAndrews: '@dylanandrews'
       jchristianhall: '@christianhall'
-      jerrysims07: '@jerrysims07'
       lomteslie: '@tom'
       natetallman: '@natetallman'
       stevencwarren: '@stevencwarren'
       traviskroberts: '@travis'
-      zenworm: '@zenworm'
+      ParisLoyo: '@parisloyo',
+      andrewgeisler: '@andrew.geisler'
     }
 
     data = if req.body.payload? then JSON.parse(req.body.payload) else req.body
