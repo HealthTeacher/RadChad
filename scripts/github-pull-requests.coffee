@@ -19,7 +19,7 @@ module.exports = (robot) ->
     userMap = {
       dcalhoun: '@david'
       DylanAndrews: '@dylanandrews'
-      jchristianhall: '@christianhall'
+      jchristianhall: '@christian'
       lomteslie: '@tom'
       natetallman: '@natetallman'
       stevencwarren: '@stevencwarren'
