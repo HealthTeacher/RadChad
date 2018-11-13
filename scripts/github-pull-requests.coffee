@@ -17,10 +17,6 @@ module.exports = (robot) ->
   robot.router.post('/github/webhook', (req, res) ->
     token = process.env.HUBOT_SLACK_BOT_TOKEN
     userMap = {
-      dcalhoun: '@david'
-      DylanAndrews: '@dylanandrews'
-      jchristianhall: '@christian'
-      lomteslie: '@tom'
       natetallman: '@natetallman'
       stevencwarren: '@stevencwarren'
       traviskroberts: '@travis'
