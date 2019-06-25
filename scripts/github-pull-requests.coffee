@@ -17,12 +17,12 @@ module.exports = (robot) ->
   robot.router.post('/github/webhook', (req, res) ->
     token = process.env.HUBOT_SLACK_BOT_TOKEN
     userMap = {
-      natetallman: '@natetallman'
-      stevencwarren: '@stevencwarren'
-      traviskroberts: '@travis'
-      ParisLoyo: '@parisloyo',
-      andrewgeisler: '@andrew.geisler',
-      DylanAndrews: '@dylanandrews'
+      natetallman: 'U029Q64JW',    # Nate Tallman
+      traviskroberts: 'U029PC91V', # Travis Roberts
+      ParisLoyo: 'U140FJESW',      # Paris Loyo
+      andrewgeisler: 'U19915R1A',  # Andrew Geisler
+      DylanAndrews: 'U0G2PFK4J',   # Dylan Andrews
+      awilli1186: 'UKM5785K6',     # Adam Williams
     }
 
     data = if req.body.payload? then JSON.parse(req.body.payload) else req.body
