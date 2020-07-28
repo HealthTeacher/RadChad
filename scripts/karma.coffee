@@ -43,6 +43,10 @@ class Karma
       if @robot.brain.data.karma
         @cache = @robot.brain.data.karma
 
+  reload: ->
+    console.log('> KARMA', @robot.brain.data.karma);
+    @cache = @robot.brain.data.karma
+
   kill: (name) ->
     subject = @findOrInitialize(name)
     delete @cache[subject]
@@ -145,6 +149,10 @@ module.exports = (robot) ->
     subject = msg.match[1].toLowerCase()
     name = karma.decrement(subject)
     msg.send "#{name} #{karma.decrementResponse()} (Karma: #{karma.get(name)})"
+
+  robot.hear /karma-reload$/i, (msg) ->
+    karma.reload()
+    msg.send "Done!"
 
   robot.respond /karma alias (\S+[^-\s]) (\S+[^-\s])( true)?$/i, (msg) ->
     alias = msg.match[1].toLowerCase()
