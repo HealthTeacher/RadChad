@@ -44,6 +44,8 @@ class Karma
         @cache = @robot.brain.data.karma
 
   reload: ->
+    console.log('> BRAIN', @robot.brain);
+    console.log('> DATA', @robot.brain.data);
     console.log('> KARMA', @robot.brain.data.karma);
     @cache = @robot.brain.data.karma
 
