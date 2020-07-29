@@ -40,17 +40,17 @@ module.exports = (robot) ->
 
   client = new Postgres.Client(database_url)
   client.connect()
-  console.log "pg-brain connected to #{database_url}."
+  console.log "> [pg-brain]", "connected to #{database_url}."
 
   client.query("SELECT storage FROM hubot").then((res) ->
-    console.log('> [pg-brain]:', 'data found', res.rows[0]['storage']);
+    console.log('> [pg-brain]:', 'data found');
     robot.brain.mergeData JSON.parse(res.rows[0]['storage'].toString())
   ).catch (err) ->
-    console.log('> pg-brain', err)
+    console.log('> [pg-brain]', err)
     robot.logger.error err
 
   client.on "error", (err) ->
-    console.log('> pg-brain', err);
+    console.log('> [pg-brain]', err);
     robot.logger.error err
 
   robot.brain.on 'save', (data) ->
