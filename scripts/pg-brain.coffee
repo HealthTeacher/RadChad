@@ -32,11 +32,12 @@ module.exports = (robot) ->
   database_url = process.env.DATABASE_URL
 
   if !database_url?
+    console.log('> [pg-brain]', 'no database url!');
     throw new Error('pg-brain requires a DATABASE_URL to be set.')
 
   client = new Postgres.Client(database_url)
   client.connect()
-  robot.logger.debug "pg-brain connected to #{database_url}."
+  console.log "pg-brain connected to #{database_url}."
 
   query = client.query("SELECT storage FROM hubot LIMIT 1")
   query.on 'row', (row) ->
@@ -44,7 +45,7 @@ module.exports = (robot) ->
     if row['storage']?
       console.log('> [pg-brain]:', 'data found');
       robot.brain.mergeData JSON.parse(row['storage'].toString())
-      robot.logger.debug "pg-brain loaded."
+      console.log "pg-brain loaded."
 
   client.on "error", (err) ->
     console.log('> pg-brain', err);
@@ -52,7 +53,7 @@ module.exports = (robot) ->
 
   robot.brain.on 'save', (data) ->
     query = client.query("UPDATE hubot SET storage = $1", [JSON.stringify(data)])
-    robot.logger.debug "pg-brain saved."
+    console.log "pg-brain saved."
 
   robot.brain.on 'close', ->
     client.end()
