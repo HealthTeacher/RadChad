@@ -42,12 +42,12 @@ module.exports = (robot) ->
   client.connect()
   console.log "> [pg-brain]", "connected to #{database_url}."
 
-  client.query("SELECT storage FROM hubot").then((res) ->
+  query = client.query("SELECT storage FROM hubot LIMIT 1")
+  query.on 'row', (row) ->
     console.log('> [pg-brain]:', 'data found');
-    robot.brain.mergeData JSON.parse(res.rows[0]['storage'].toString())
-  ).catch (err) ->
-    console.log('> [pg-brain]', err)
-    robot.logger.error err
+    if row['storage']?
+      robot.brain.mergeData JSON.parse(row['storage'].toString())
+      robot.logger.debug "pg-brain loaded."
 
   client.on "error", (err) ->
     console.log('> [pg-brain]', err);
