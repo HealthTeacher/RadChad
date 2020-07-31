@@ -25,8 +25,8 @@
 
 Postgres = require 'pg'
 
-if process.env.DATABASE_SSL
-  Postgres.defaults.ssl = true
+# if process.env.DATABASE_SSL
+#   Postgres.defaults.ssl = true
 
 # sets up hooks to persist the brain into postgres.
 module.exports = (robot) ->
@@ -42,12 +42,12 @@ module.exports = (robot) ->
   client.connect()
   console.log "> [pg-brain]", "connected to #{database_url}."
 
-  query = client.query("SELECT storage FROM hubot LIMIT 1")
-  query.on 'row', (row) ->
+  client.query("SELECT storage FROM hubot").then((res) ->
     console.log('> [pg-brain]:', 'data found');
-    if row['storage']?
-      robot.brain.mergeData JSON.parse(row['storage'].toString())
-      robot.logger.debug "pg-brain loaded."
+    robot.brain.mergeData JSON.parse(res.rows[0]['storage'].toString())
+  ).catch (err) ->
+    console.log('> [pg-brain]', err)
+    robot.logger.error err
 
   client.on "error", (err) ->
     console.log('> [pg-brain]', err);
