@@ -35,7 +35,9 @@ module.exports = (robot) ->
 
   client = new Postgres.Client({
     connectionString,
-    ssl: true,
+    ssl: {
+      rejectUnauthorized: false
+    }
   })
   client.connect()
 
