@@ -9,11 +9,8 @@
 #
 # Commands:
 #   <name>++ - give name some karma
-#   <name>-- - take away some of name's karma
 #   hubot karma <name> - check name's karma (if <name> is omitted, show the top 5)
 #   hubot karma best - show the top 5
-#   hubot karma worst - show the bottom 5
-#   hubot karma all - show all subjects who have received karma
 #   hubot karma alias <alias> <name> <confirm> - assign <alias> as an alias to <name> (if alias exists as an existing user, you must pass "true" to confirm)
 #   hubot karma unalias <alias> <name> - remove <alias> as an alias from <name>
 #   hubot karma aliases <name> - show aliases for <name>
@@ -28,15 +25,9 @@ class Karma
 
     @increment_responses = [
       "leveled up...woopty doo"
-      "leveled up..."
       "is better than ol' SadChad"
-    ]
-
-    @decrement_responses = [
-      "took a dive. You get used to it..."
-      "has the spoiled milk now"
-      "lost a level...such is life"
-      "lost a level...welcome to my world"
+      "gained a level, good for you I guess"
+      "is just rubbing it in my face now…"
     ]
 
     @robot.brain.on 'loaded', =>
@@ -55,17 +46,8 @@ class Karma
     @robot.brain.data.karma = @cache
     return subject
 
-  decrement: (name) ->
-    subject = @findOrInitialize(name)
-    @cache[subject]['karma'] -= 1
-    @robot.brain.data.karma = @cache
-    return subject
-
   incrementResponse: ->
     @increment_responses[Math.floor(Math.random() * @increment_responses.length)]
-
-  decrementResponse: ->
-    @decrement_responses[Math.floor(Math.random() * @decrement_responses.length)]
 
   alias: (alias, name) ->
     subject = @findOrInitialize(name)
@@ -129,10 +111,6 @@ class Karma
     sorted = @sort()
     sorted.slice(0, n)
 
-  bottom: (n = 5) ->
-    sorted = @sort()
-    sorted.slice(-n).reverse()
-
 module.exports = (robot) ->
   karma = new Karma robot
 
@@ -140,11 +118,6 @@ module.exports = (robot) ->
     subject = msg.match[1].toLowerCase()
     name = karma.increment(subject)
     msg.send "#{name} #{karma.incrementResponse()} (Karma: #{karma.get(name)})"
-
-  robot.hear /(\S+[^-\s])--(\s|$)/, (msg) ->
-    subject = msg.match[1].toLowerCase()
-    name = karma.decrement(subject)
-    msg.send "#{name} #{karma.decrementResponse()} (Karma: #{karma.get(name)})"
 
   robot.respond /karma alias (\S+[^-\s]) (\S+[^-\s])( true)?$/i, (msg) ->
     alias = msg.match[1].toLowerCase()
@@ -183,30 +156,6 @@ module.exports = (robot) ->
   robot.router.get "/karma/best", (req, res) ->
     verbiage = []
     for item, rank in karma.top()
-      verbiage.push {name: item.name, karma: item.karma}
-    res.end JSON.stringify({users: verbiage})
-
-  robot.respond /karma worst$/i, (msg) ->
-    verbiage = ["The Worst"]
-    for item, rank in karma.bottom()
-      verbiage.push "#{rank + 1}. #{item.name} - #{item.karma}"
-    msg.send verbiage.join("\n")
-
-  robot.router.get "/karma/worst", (req, res) ->
-    verbiage = {}
-    for item, rank in karma.bottom()
-      verbiage[rank+1] = {name: item.name, karma: item.karma}
-    res.end JSON.stringify(verbiage)
-
-  robot.respond /karma all$/i, (msg) ->
-    verbiage = ["All Karma"]
-    for item, rank in karma.sort()
-      verbiage.push "#{rank + 1}. #{item.name} - #{item.karma}"
-    msg.send verbiage.join("\n")
-
-  robot.router.get "/karma/all", (req, res) ->
-    verbiage = []
-    for item, rank in karma.sort()
       verbiage.push {name: item.name, karma: item.karma}
     res.end JSON.stringify({users: verbiage})
 
