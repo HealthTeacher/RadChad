@@ -28,12 +28,15 @@ Postgres = require 'pg'
 # sets up hooks to persist the brain into postgres.
 module.exports = (robot) ->
 
-  database_url = process.env.DATABASE_URL
+  connectionString = process.env.DATABASE_URL
 
-  if !database_url?
+  if !connectionString?
     throw new Error('pg-brain requires a DATABASE_URL to be set.')
 
-  client = new Postgres.Client(database_url)
+  client = new Postgres.Client({
+    connectionString,
+    ssl: process.env.DATABASE_SSL,
+  })
   client.connect()
 
   client.query("SELECT storage FROM hubot").then((res) ->
