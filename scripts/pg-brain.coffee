@@ -35,17 +35,17 @@ module.exports = (robot) ->
 
   client = new Postgres.Client({
     connectionString,
-    ssl: process.env.DATABASE_SSL,
+    ssl: true,
   })
   client.connect()
 
   client.query("SELECT storage FROM hubot").then((res) ->
     robot.brain.mergeData JSON.parse(res.rows[0]['storage'].toString())
   ).catch (err) ->
-    robot.logger.error err
+    robot.logger.error "CLIENT QUERY ERROR: #{err}"
 
   client.on "error", (err) ->
-    robot.logger.error err
+    robot.logger.error "CLIENT ERROR: #{err}"
 
   robot.brain.on 'save', (data) ->
     query = client.query("UPDATE hubot SET storage = $1", [JSON.stringify(data)])
