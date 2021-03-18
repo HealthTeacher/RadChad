@@ -2,7 +2,21 @@
 
 This is the GoNoodle version of GitHub's Campfire bot, hubot.
 
+## Requirements
+
+- node `>=10.x.x` ([Install](http://blog.teamtreehouse.com/install-node-js-npm-mac))
+- npm `>=5.x.x` (Included w/ node)
+
+## Project Setup
+
+1.  `npm install`
+1.  You'll need to have coffeescript installed - `npm install -g coffee-script`
+
 ### Testing Hubot Locally
+
+Hubot expects there to be a DATABASE_URL provided to connect to a Postgres db.
+
+`export DATABASE_URL="postgres://username:password@localhost:5432/database_name"`
 
 You can test your hubot by running the following.
 
@@ -16,11 +30,11 @@ prompt.
     [Sun, 04 Dec 2011 18:41:11 GMT] INFO Loading scripts from /home/tomb/Development/hubot/src/scripts
     Hubot>
 
-Then you can interact with hubot by typing `hubot help`.
+Then you can interact with hubot by typing `SadChad help` (or `!help` for short).
 
-    Hubot> hubot help
+    SadChad> !help
 
-    Hubot> animate me <query> - The same thing as `image me`, except adds a few
+    SadChad> animate me <query> - The same thing as `image me`, except adds a few
     convert me <expression> to <units> - Convert expression to given units.
     help - Displays all of the help commands that Hubot knows about.
     ...
